@@ -16,9 +16,7 @@ https://www.google.com/speech-api/v2/recognize
 
 You can specify an optional query string called ```app```, which returns some extra transcripts for some reason.
 
-**client:** optional
-
-Seems to do nothing in particular.
+**client:** optional, seems to do nothing in particular
 
 ##Data:
 
@@ -26,7 +24,7 @@ Seems to do nothing in particular.
 Flac file; 44100Hz 32bit float, exported with Audacity. Check the audio folder in this repository for some hilarious examples.
 
 ###Headers:
-**Content-Type:** 
+**Content-Type:**
 
 ```audio/x-flac; rate=44100;```
 
@@ -80,15 +78,9 @@ When it's doubtful, it adds a confidence parameter for you. It also seems to add
 }
 ```
 
-An example of the response object can also be found here:
+##CURL request/example:
 
-[https://gist.github.com/gillesdemey/68f46db997064390e1bf/0afe58f46faf49aa3d440899844cb0d886479a8a](https://gist.github.com/gillesdemey/68f46db997064390e1bf/0afe58f46faf49aa3d440899844cb0d886479a8a)
-
-Along with the diff between supplying the optional ```app``` query string parameter and the regular response.
-
-[https://gist.github.com/gillesdemey/68f46db997064390e1bf/revisions](https://gist.github.com/gillesdemey/68f46db997064390e1bf/revisions)
-
-##CURL request:
+Check out the repository and execute the following CURL request.
 
 ```bash
 curl -X POST \
