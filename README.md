@@ -20,17 +20,41 @@ You can specify an optional query string called ```app```, which returns some ex
 
 ##Data:
 
-###File used for testing:
+###FLAC
 Flac file; 44100Hz 32bit float, exported with Audacity. Check the audio folder in this repository for some hilarious examples.
+
+```
+Channels       : 2
+Sample Rate    : 44100
+Precision      : 32-bit
+Sample Encoding: 32-bit Float
+```
+
+###16-bit PCM
+
+The following audio options are confirmed working for 16-bit PCM sample encoding:
+
+```
+Channels       : 1
+Sample Rate    : 16000
+Precision      : 16-bit
+Sample Encoding: 16-bit Signed Integer PCM
+```
+
+One-line sox recording command:
+
+`rec --encoding signed-integer --bits 16 --channels 1 --rate 16000 test.wav`
 
 ###Headers:
 **Content-Type:**
 
-```audio/x-flac; rate=44100;```
+```Content-Type: audio/x-flac; rate=44100;```
 
 Set the rate to be equal to the rate of the FLAC file (generally 44100Hz) but it supports different rates.
 
-```audio/l16``` is also supported with a rate of 44100Hz for files encoded with LPCM 16-bit (signed).
+```Content-Type: audio/l16; rate=16000;``` is also supported with a rate of 44100Hz for files encoded with LPCM 16-bit (signed).
+
+**NOTE:** Make sure the rate in your header matches the sample rate you used for your audio capture.
 
 **User-Agent:**
 
@@ -78,14 +102,32 @@ When it's doubtful, it adds a confidence parameter for you. It also seems to add
 }
 ```
 
-##CURL request/example:
+##Example
 
-Check out the repository and execute the following CURL request.
+### Install sox
 
-```bash
+On OS X with Homebrew installed:
+
+`brew install sox`
+
+### Record audio
+
+`rec --encoding signed-integer --bits 16 --channels 1 --rate 16000 test.wav`
+
+### Send the request
+
+```
+curl -X POST \
+--data-binary @audio/hello.wav \
+--header 'Content-Type: audio/l16; rate=16000;' \
+'https://www.google.com/speech-api/v2/recognize?output=json&lang=en-us&key=AIzaSyCnl6MRydhw_5fLXIdASxkLJzcJh5iX0M4'
+```
+
+Or for FLAC encoded audio:
+
+```
 curl -X POST \
 --data-binary @audio/good-morning-google.flac \
---user-agent 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.117 Safari/537.36' \
 --header 'Content-Type: audio/x-flac; rate=44100;' \
 'https://www.google.com/speech-api/v2/recognize?output=json&lang=en-us&key=AIzaSyCnl6MRydhw_5fLXIdASxkLJzcJh5iX0M4'
 ```
