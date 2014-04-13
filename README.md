@@ -52,7 +52,7 @@ One-line sox recording command:
 
 Set the rate to be equal to the rate of the FLAC file (generally 44100Hz) but it supports different rates.
 
-```Content-Type: audio/l16; rate=16000;``` is also supported with a rate of 44100Hz for files encoded with LPCM 16-bit (signed).
+```Content-Type: audio/l16; rate=16000;``` is also supported with a rate of 44100Hz or 16000Hz for files encoded with LPCM 16-bit signed-integer.
 
 **NOTE:** Make sure the rate in your header matches the sample rate you used for your audio capture.
 
